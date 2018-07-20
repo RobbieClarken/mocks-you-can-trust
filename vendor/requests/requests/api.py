@@ -98,7 +98,9 @@ def head(url, **kwargs):
     return request('head', url, **kwargs)
 
 
-def post(url, data=None, json=None, **kwargs):
+def post(url, data=None, json=None, params=None, headers=None, cookies=None, files=None,
+         auth=None, timeout=None, allow_redirects=True, proxies=None, hooks=None,
+         stream=None, verify=None, cert=None):
     r"""Sends a POST request.
 
     :param url: URL for the new :class:`Request` object.
@@ -109,7 +111,10 @@ def post(url, data=None, json=None, **kwargs):
     :rtype: requests.Response
     """
 
-    return request('post', url, data=data, json=json, **kwargs)
+    return request('post', url, data=data, json=json, params=params, headers=headers,
+                   cookies=cookies, files=files, auth=auth, timeout=timeout,
+                   allow_redirects=allow_redirects, proxies=proxies, hooks=hooks,
+                   stream=stream, verify=verify, cert=cert)
 
 
 def put(url, data=None, **kwargs):
