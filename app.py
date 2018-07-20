@@ -20,3 +20,9 @@ def send_alert(message):
 def test_successful_alert(mock_post):
     assert send_alert("foo") is True
     mock_post.assert_called_with(URL, data='{"message": "foo"}', headers=HEADERS)
+
+
+@mock.patch("requests.post", autospec=True)
+def test_failed_alert(mock_post):
+    mock_post.return_value = mock.Mock(ok=False)
+    assert send_alert("foo") is False
