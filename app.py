@@ -16,15 +16,13 @@ def send_alert(message):
     return True
 
 
-@mock.patch("requests.post", autospec=True)
-def test_successful_alert(mock_post):
+def test_successful_alert(requests_mock):
+    requests_mock.post(URL)
     assert send_alert("foo") is True
-    mock_post.assert_called_with(URL, data='{"message": "foo"}', headers=HEADERS)
+    assert requests_mock.last_request.json() == {"message": "foo"}
+    assert requests_mock.last_request.headers["Content-Type"] == "application/json"
 
 
-@mock.patch("requests.post", autospec=True)
-def test_failed_alert(mock_post):
-    response = requests.Response()
-    response.status_code = 500
-    mock_post.return_value = response
+def test_failed_alert(requests_mock):
+    requests_mock.post(URL, status_code=500)
     assert send_alert("foo") is False
