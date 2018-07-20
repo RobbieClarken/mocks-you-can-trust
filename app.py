@@ -24,5 +24,7 @@ def test_successful_alert(mock_post):
 
 @mock.patch("requests.post", autospec=True)
 def test_failed_alert(mock_post):
-    mock_post.return_value = mock.Mock(spec_set=requests.Response(), ok=False)
+    response = requests.Response()
+    response.status_code = 500
+    mock_post.return_value = response
     assert send_alert("foo") is False
