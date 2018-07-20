@@ -16,5 +16,7 @@ def send_alert(message):
     return True
 
 
-def test_successful_alert():
-    ...
+@mock.patch("requests.post")
+def test_successful_alert(mock_post):
+    assert send_alert("foo") is True
+    mock_post.assert_called_with(URL, body='{"message": "foo"}', headers=HEADERS)
