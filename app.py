@@ -9,7 +9,7 @@ HEADERS = {"Content-Type": "application/json"}
 
 def send_alert(message):
     payload = {"message": message}
-    response = requests.post(URL, data=json.dumps(payload), headers=HEADERS)
+    response = requests.post(URL, json=payload)
     if not response.ok:
         print(f"alert failed: {response.text}")
         return False
